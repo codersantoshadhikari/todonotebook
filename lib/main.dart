@@ -10,6 +10,7 @@ class TodoNotesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'To-do Notes',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: const TodoListPage(),
@@ -149,7 +150,8 @@ class TodoListPageState extends State<TodoListPage> {
 
   _saveTodos() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> stringTodos = _todos.map((todo) => json.encode(todo.toJson())).toList();
+    List<String> stringTodos =
+        _todos.map((todo) => json.encode(todo.toJson())).toList();
     prefs.setStringList('todos', stringTodos);
   }
 
@@ -159,7 +161,9 @@ class TodoListPageState extends State<TodoListPage> {
 
     if (stringTodos != null) {
       setState(() {
-        _todos = stringTodos.map((todo) => Todo.fromJson(json.decode(todo))).toList();
+        _todos = stringTodos
+            .map((todo) => Todo.fromJson(json.decode(todo)))
+            .toList();
       });
     }
   }
